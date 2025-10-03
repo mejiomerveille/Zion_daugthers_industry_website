@@ -21,7 +21,7 @@ const translations = {
     'nav.donate': 'Faire un Don',
     
     // Home Page
-    'home.hero.title': 'Group Zion Daughters Ministries',
+    'home.hero.title': 'Zion Daughters Ministries Worldwide',
     'home.hero.subtitle': 'Évangélisation, Formation et Service au nom de Jésus-Christ',
     'home.hero.cta': 'Découvrir nos Ministères',
     'home.about.title': 'Notre Mission',
@@ -82,7 +82,7 @@ const translations = {
     'nav.donate': 'Donate',
     
     // Home Page
-    'home.hero.title': 'Group Zion Daughters Ministries',
+    'home.hero.title': 'Zion Daughters Ministries Worldwide',
     'home.hero.subtitle': 'Evangelization, Training and Service in the name of Jesus Christ',
     'home.hero.cta': 'Discover Our Ministries',
     'home.about.title': 'Our Mission',
