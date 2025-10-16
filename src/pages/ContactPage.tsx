@@ -34,13 +34,13 @@ export const ContactPage: React.FC = () => {
     {
       icon: Phone,
       title: 'Téléphone',
-      details: ['+237 6XX XX XX XX', '+237 6YY YY YY YY'],
+      details: ['+237 680 83 75 90', '+237 674 98 77 34'],
       color: 'from-green-500 to-emerald-600'
     },
     {
       icon: MapPin,
       title: 'Adresse',
-      details: ['Yaoundé, Cameroun', 'Quartier Ekounou'],
+      details: ['Yaoundé, Cameroun', 'En Bas de la Salle du Royaume des Temoins de Jehovah Jouvence '],
       color: 'from-purple-500 to-pink-600'
     }
   ];
@@ -49,19 +49,19 @@ export const ContactPage: React.FC = () => {
     {
       icon: Facebook,
       name: 'Facebook',
-      url: '#',
+      url: 'https://www.facebook.com/ziondaughters2016?rdid=J5BZmbSauDIQIUD9&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F179sExwnVN%2F#',
       color: 'hover:bg-blue-600'
     },
     {
       icon: Instagram,
       name: 'Instagram',
-      url: '#',
+      url: 'https://www.facebook.com/people/Apostle-M-S-Rodriguez/61571912078157/?rdid=6E43Y82gyJurlOUK&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1BLJEdACKN%2F',
       color: 'hover:bg-pink-600'
     },
     {
       icon: Youtube,
       name: 'YouTube',
-      url: '#',
+      url: 'https://www.facebook.com/rodriguesstephane.minfoumou?rdid=GA2fKgdcFhuxHZu7&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19ikCWwry7%2F#',
       color: 'hover:bg-red-600'
     }
   ];
@@ -219,12 +219,23 @@ export const ContactPage: React.FC = () => {
                 <h3 className="text-2xl font-bold text-gray-800 mb-6">
                   Notre Localisation
                 </h3>
-                <div className="bg-gradient-to-br from-gray-100 to-gray-200 h-64 rounded-xl flex items-center justify-center">
-                  <div className="text-center text-gray-500">
-                    <MapPin className="w-12 h-12 mx-auto mb-4" />
-                    <p className="text-lg">Carte Interactive</p>
-                    <p className="text-sm">Yaoundé, Cameroun</p>
-                  </div>
+                
+                <div className="rounded-xl overflow-hidden shadow-lg border border-gray-200">
+                  <iframe
+                    title="Salle des Témoins de Jéhovah Jouvence"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7957.520854136143!2d11.4788544!3d3.8607992999999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x108bcf28975f4c2f%3A0xe73ec77e32e7d25e!2sSalle%20du%20Royaume%20des%20T%C3%A9moins%20de%20J%C3%A9hovah%20-%20Jouvence!5e0!3m2!1sfr!2scm!4v1739691234567!5m2!1sfr!2scm"
+                    width="100%"
+                    height="300"
+                    // allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full h-72"
+                  ></iframe>
+                </div>
+
+                <div className="mt-4 text-gray-600 text-center">
+                  <p className="font-semibold">Salle du Royaume des Témoins de Jéhovah - Jouvence</p>
+                  <p>Quartier Jouvence, Yaoundé, Cameroun</p>
                 </div>
               </div>
 

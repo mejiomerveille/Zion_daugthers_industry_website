@@ -14,7 +14,7 @@ const translations = {
   fr: {
     // Navigation
     'nav.home': 'Accueil',
-    'nav.association': 'Association Zion Daughters',
+    'nav.association': "Association Zion Daughters Int'l ",
     'nav.church': 'Église Apostolique',
     'nav.school': 'École Biblique',
     'nav.contact': 'Contact',
@@ -28,7 +28,7 @@ const translations = {
     'home.about.description': 'Le Group Zion Daughters Ministries est un ensemble de structures dédiées à l\'évangélisation, à la formation biblique et au service communautaire, œuvrant pour l\'expansion du Royaume de Dieu.',
     
     // Association
-    'association.hero.title': 'Association Zion Daughters',
+    'association.hero.title': " Association Zion Daughters Int'l ",
     'association.hero.subtitle': 'Association Internationale d\'Évangélisation et d\'Aide aux Orphelins',
     'association.description': 'Légalisée au Cameroun en 2019, l\'Association Zion Daughters se consacre à l\'évangélisation, l\'aide aux orphelins et la promotion du ministère de la femme.',
     'association.president': 'Présidente Fondatrice : Mama Esther',
@@ -75,7 +75,7 @@ const translations = {
   en: {
     // Navigation
     'nav.home': 'Home',
-    'nav.association': 'Zion Daughters Association',
+    'nav.association': "Zion Daughters Association Int'l ",
     'nav.church': 'Apostolic Church',
     'nav.school': 'Bible School',
     'nav.contact': 'Contact',
@@ -89,7 +89,7 @@ const translations = {
     'home.about.description': 'Group Zion Daughters Ministries is a collection of structures dedicated to evangelization, biblical training and community service, working for the expansion of God\'s Kingdom.',
     
     // Association
-    'association.hero.title': 'Zion Daughters Association',
+    'association.hero.title': "Zion Daughters Association Int'l ",
     'association.hero.subtitle': 'International Association for Evangelization and Orphan Aid',
     'association.description': 'Legalized in Cameroon in 2019, the Zion Daughters Association is dedicated to evangelization, helping orphans and promoting women\'s ministry.',
     'association.president': 'Founding President: Mama Esther',
