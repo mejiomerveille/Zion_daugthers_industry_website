@@ -55,7 +55,7 @@ export default function Events() {
         </div>
 
         {/* Events Grid */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
           {events.map((event, index) => (
             <div 
               key={index}

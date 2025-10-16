@@ -6,7 +6,7 @@ import { HeroSection } from '../components/HeroSection';
 import About from '../components/eglise/About';
 import Services from '../components/eglise/Services';
 import Events from '../components/eglise/Events';
-import { Church, Calendar, Users, SprayCan as Pray, Building, Heart } from 'lucide-react';
+import { Church, Facebook, Users, SprayCan as Pray, Building, Heart, Instagram, TicketCheckIcon, Youtube } from 'lucide-react';
 
 export const ChurchPage: React.FC = () => {
   const { t } = useLanguage();
@@ -147,61 +147,196 @@ export const ChurchPage: React.FC = () => {
         </div>
       </section>
 
+            {/* Vision Leaders Section */}
+      <section className="py-20 bg-gradient-to-br from-indigo-50 to-blue-50">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+              Nos Porteurs de Vision
+            </h2>
+            <p className="text-lg text-gray-600">
+              Des serviteurs passionnés par la mission de Dieu et le développement spirituel de la communauté.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-20">
+            {[
+              {
+                image: '/images/im3.jpeg',
+                name: 'Pasteur Esther Minfoumou',
+                title: 'Fondateur & Visionnaire Principal',
+                facebook: 'https://facebook.com/pasteur.jeanclaude',
+                youtube: 'https://youtube.com/@eglisejeanclaude',
+                tiktok: 'https://tiktok.com/@pasteurjeanclaude',
+                instagram: 'https://instagram.com/pasteur.jeanclaude'
+              },
+              {
+                image: '/images/im5.jpeg',
+                name: 'Prophetesse Esther Minfoumou',
+                title: 'Coordinatrice des Ministères',
+                facebook: 'https://www.facebook.com/esther.sikati.94?rdid=0GjlWcqEM0HTxYjb&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19yBtSndnX%2F#',
+                youtube: 'https://youtube.com/@ministeremarie',
+                tiktok: 'https://tiktok.com/@soeurmarie',
+                instagram: 'https://instagram.com/soeur.marie'
+              },
+            ].map((leader, index) => (
+              <motion.div
+                key={index}
+                className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+              >
+                <img
+                  src={leader.image}
+                  alt={leader.name}
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-6 text-center">
+                  <h3 className="text-xl font-bold text-gray-800 mb-1">
+                    {leader.name}
+                  </h3>
+                  <p className="text-blue-600 font-medium mb-4">{leader.title}</p>
+                  <div className="flex justify-center gap-4 text-gray-500">
+                    <a href={leader.facebook} target="_blank" rel="noreferrer" className="hover:text-blue-600 transition">
+                      <Facebook/>
+                    </a>
+                    <a href={leader.youtube} target="_blank" rel="noreferrer" className="hover:text-red-600 transition">
+                      <Youtube/>
+                    </a>
+                    <a href={leader.tiktok} target="_blank" rel="noreferrer" className="hover:text-gray-800 transition">
+                      <TicketCheckIcon/>
+                    </a>
+                    <a href={leader.instagram} target="_blank" rel="noreferrer" className="hover:text-pink-600 transition">
+                      <Instagram/>
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Activities Section */}
 
       <Services/>
       {/* Activities Section */}
       <Events/>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+              Témoignages des Fidèles
+            </h2>
+            <p className="text-lg text-gray-600">
+              Découvrez comment Dieu agit puissamment dans la vie de nos membres.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                image: '/images/fidele1.jpg',
+                name: 'Sœur Grâce M.',
+                testimony: "J'étais malade depuis des mois, mais après la prière du dimanche, j'ai été complètement guérie ! Gloire à Dieu !"
+              },
+              {
+                image: '/images/fidele2.jpg',
+                name: 'Frère Samuel T.',
+                testimony: "Dieu a transformé ma vie spirituelle depuis que j’ai rejoint cette église. J’ai retrouvé la paix et la joie intérieure."
+              },
+              {
+                image: '/images/fidele3.jpg',
+                name: 'Sœur Nadège L.',
+                testimony: "Pendant le culte de louange, j’ai ressenti une présence divine incroyable. Cette communauté est une vraie bénédiction."
+              }
+            ].map((testimony, index) => (
+              <motion.div
+                key={index}
+                className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center text-center hover:shadow-2xl transition-all duration-300"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+              >
+                <img
+                  src={testimony.image}
+                  alt={testimony.name}
+                  className="w-24 h-24 object-cover rounded-full mb-4 shadow-md"
+                />
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">{testimony.name}</h4>
+                <p className="text-gray-600 italic leading-relaxed">“{testimony.testimony}”</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Gallery Section */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
-  <div className="container mx-auto px-4">
-    <motion.div
-      className="text-center mb-16"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: true }}
-    >
-      <h2 className="text-4xl font-bold text-gray-800 mb-6">
-        Galerie
-      </h2>
-      <p className="text-xl text-gray-600">
-        Découvrez quelques moments de notre vie d'église
-      </p>
-    </motion.div>
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl font-bold text-gray-800 mb-6">
+              Galerie
+            </h2>
+            <p className="text-xl text-gray-600">
+              Découvrez quelques moments de notre vie d'église
+            </p>
+          </motion.div>
 
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {[
-        '/images/im1.jpeg',
-        '/images/im2.jpeg',
-        '/images/im3.jpeg',
-        '/images/im4.jpeg',
-        '/images/im5.jpeg',
-        '/images/im6.jpeg',
-        '/images/im1.jpeg',
-        '/images/im1.jpeg'
-      ].map((image, index) => (
-        <motion.div
-          key={index}
-          className="relative h-48 overflow-hidden rounded-2xl group cursor-pointer"
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: index * 0.1 }}
-          whileHover={{ scale: 1.05 }}
-          viewport={{ once: true }}
-        >
-          <img
-            src={image}
-            alt={`Galerie ${index + 1}`}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        </motion.div>
-      ))}
-    </div>
-  </div>
-</section>
-
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {[
+              '/images/im1.jpeg',
+              '/images/im2.jpeg',
+              '/images/im3.jpeg',
+              '/images/im4.jpeg',
+              '/images/im5.jpeg',
+              '/images/im6.jpeg',
+              '/images/im1.jpeg',
+              '/images/im1.jpeg'
+            ].map((image, index) => (
+              <motion.div
+                key={index}
+                className="relative h-48 overflow-hidden rounded-2xl group cursor-pointer"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+                viewport={{ once: true }}
+              >
+                <img
+                  src={image}
+                  alt={`Galerie ${index + 1}`}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Call to Action */}
       <section className="py-20 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-800">

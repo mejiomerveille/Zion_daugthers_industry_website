@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { HeroSection } from '../components/HeroSection';
+import { EventsPage } from '../components/EventsPage';
 import { BookOpen, GraduationCap, Users, Award, Calendar, Mail, User, Phone } from 'lucide-react';
 
 export const SchoolPage: React.FC = () => {
@@ -220,6 +221,9 @@ export const SchoolPage: React.FC = () => {
           </div>
         </div>
       </section>
+      {/* Events Section */}
+
+      <EventsPage/>
 
       {/* Registration Form Section */}
       <section id="inscription" className="py-20 bg-gradient-to-br from-green-50 to-emerald-50">

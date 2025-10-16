@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { HeroSection } from '../components/HeroSection';
 import { Heart, Users, Gift, Music, Camera, ArrowRight } from 'lucide-react';
+import interview from '../../public/images/association/Image interview crtv.png'
+import interview2 from '../../public/images/association/image interview 2.png'
 
 export const AssociationPage: React.FC = () => {
   const { t } = useLanguage();
@@ -13,7 +15,7 @@ export const AssociationPage: React.FC = () => {
       icon: Gift,
       title: t('association.activities.donations'),
       description: 'Aide aux orphelins et aux nécessiteux, distributions de vivres et de vêtements',
-      image: 'https://images.pexels.com/photos/6995247/pexels-photo-6995247.jpeg?auto=compress&cs=tinysrgb&w=600'
+      image: interview
     },
     {
       icon: Music,
@@ -25,7 +27,7 @@ export const AssociationPage: React.FC = () => {
       icon: Camera,
       title: t('association.activities.visits'),
       description: 'Visites dans les communautés, témoignages et partage de la Parole',
-      image: 'https://images.pexels.com/photos/6143557/pexels-photo-6143557.jpeg?auto=compress&cs=tinysrgb&w=600'
+      image: interview2
     }
   ];
 
@@ -35,7 +37,7 @@ export const AssociationPage: React.FC = () => {
       <HeroSection
         title={t('association.hero.title')}
         subtitle={t('association.hero.subtitle')}
-        backgroundImage="/images/rouge.jpeg"
+        backgroundImage="/images/estro.jpg"
       >
         <motion.div
           whileHover={{ scale: 1.05 }}
@@ -82,7 +84,7 @@ export const AssociationPage: React.FC = () => {
               viewport={{ once: true }}
             >
               <img
-                src="https://images.pexels.com/photos/6995247/pexels-photo-6995247.jpeg?auto=compress&cs=tinysrgb&w=800"
+                src="/images/asso.jpeg"
                 alt="Association activities"
                 className="rounded-2xl shadow-xl w-full"
               />
@@ -177,7 +179,7 @@ export const AssociationPage: React.FC = () => {
                 whileHover={{ scale: 1.02, y: -5 }}
                 viewport={{ once: true }}
               >
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-58 overflow-hidden">
                   <img
                     src={activity.image}
                     alt={activity.title}
@@ -203,6 +205,88 @@ export const AssociationPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Article de Presse Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+              Article de Presse
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              L'association Zion Daughter’s Int’l redonne du sourire aux orphelins — reportage paru dans le journal <strong>Médiation</strong>.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <img
+              src="/images/association/Médiation-article sur Zion.jpg"
+              alt="Article de presse sur Zion Daughter’s Int’l"
+              className="w-full rounded-2xl transform hover:scale-105 transition-transform duration-700"
+            />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Video Section */}
+      <section className="py-20 bg-gradient-to-br from-rose-50 to-pink-100">
+        <div className="container mx-auto px-4 text-center">
+          <motion.div
+            className="mb-12"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+              Visite à l’Orphelinat
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Découvrez en images notre action humanitaire en faveur des orphelins de la Fondation Mont Sinaï à Yaoundé.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="relative max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            {/* Si tu as un lien YouTube */}
+            {/* <div className="aspect-w-16 aspect-h-9">
+              <iframe
+                src="https://www.youtube.com/embed/TA_REMPLACER_PAR_TON_LIEN"
+                title="Visite à l’Orphelinat"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full rounded-2xl"
+              ></iframe>
+            </div> */}
+
+            {/* OU si tu as une vidéo locale */}
+            
+            <video controls className="w-full rounded-2xl">
+              <source src="/videos/CRTV Télé-Visite de Zion-Mont Sinai- 2022-09-23 at 15.02.38.mp4" type="video/mp4" />
+              Votre navigateur ne supporte pas la lecture vidéo.
+            </video> 
+           
+          </motion.div>
+        </div>
+      </section>
+
 
       {/* Call to Action */}
       <section className="py-20 bg-gradient-to-r from-pink-600 via-rose-600 to-pink-800">

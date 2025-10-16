@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Heart, Church, BookOpen, CreditCard, Shield, CheckCircle } from 'lucide-react';
-import havilah from '../../public/images/havilah.jpeg';
+import { Heart, Church, BookOpen, Shield, CheckCircle } from 'lucide-react';
+// import havilah from '../../public/images/havilah.jpeg';
 
 export const DonatePage: React.FC = () => {
   const { t } = useLanguage();
@@ -50,12 +50,12 @@ export const DonatePage: React.FC = () => {
     console.log('Donation:', { structure: selectedStructure, amount: donationAmount, donor: donorInfo });
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDonorInfo({
-      ...donorInfo,
-      [e.target.name]: e.target.value
-    });
-  };
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setDonorInfo({
+  //     ...donorInfo,
+  //     [e.target.name]: e.target.value
+  //   });
+  // };
 
   const handlePayment = (method: string) => {
     const payAmount = customAmount || amount;
