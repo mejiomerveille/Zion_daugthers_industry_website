@@ -40,7 +40,7 @@ export const ContactPage: React.FC = () => {
     {
       icon: MapPin,
       title: 'Adresse',
-      details: ['Yaoundé, Cameroun', 'En Bas de la Salle du Royaume des Temoins de Jehovah Jouvence '],
+      details: ['Yaoundé, Cameroun', "Descente Mario- Jouvence pres de l'ancien Omega "],
       color: 'from-purple-500 to-pink-600'
     }
   ];
@@ -67,7 +67,7 @@ export const ContactPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-20 bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800">
         <div className="container mx-auto px-4 text-center">
@@ -234,7 +234,7 @@ export const ContactPage: React.FC = () => {
                 </div>
 
                 <div className="mt-4 text-gray-600 text-center">
-                  <p className="font-semibold">Salle du Royaume des Témoins de Jéhovah - Jouvence</p>
+                  <p className="font-semibold">Descente Mario- Jouvence pres de l'ancien Omega</p>
                   <p>Quartier Jouvence, Yaoundé, Cameroun</p>
                 </div>
               </div>

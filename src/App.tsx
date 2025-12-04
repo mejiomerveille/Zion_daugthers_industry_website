@@ -8,6 +8,7 @@ import { ChurchPage } from './pages/ChurchPage';
 import { SchoolPage } from './pages/SchoolPage';
 import { ContactPage } from './pages/ContactPage';
 import { DonatePage } from './pages/DonatePage';
+import { CoursePage } from './pages/CoursePage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/school" element={<SchoolPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/donate" element={<DonatePage />} />
+            <Route path="/course/:courseId" element={<CoursePage />} />
           </Routes>
         </div>
       </Router>

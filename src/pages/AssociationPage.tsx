@@ -32,7 +32,7 @@ export const AssociationPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen mt-20">
+    <div className="min-h-screen">
       {/* Hero Section */}
       <HeroSection
         title={t('association.hero.title')}

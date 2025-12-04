@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { HeroSection } from '../components/HeroSection';
+import { BlogSection } from '../components/BlogSection';
 import { FeatureCard } from '../components/FeatureCard';
 import { Heart, BookOpen, Church, Users, ArrowRight } from 'lucide-react';
 import BlogEvents from '../components/eglise/BlogEvents';
@@ -17,7 +18,7 @@ export const HomePage: React.FC = () => {
       description: t('association.description'),
       icon: Heart,
       path: '/association',
-      image: '/images/blanc.jpeg',
+      image: '/images/asso.jpeg',
       color: 'from-pink-500 to-rose-600'
     },
     {
@@ -25,7 +26,7 @@ export const HomePage: React.FC = () => {
       description: t('church.project.description'),
       icon: Church,
       path: '/church',
-      image: 'https://images.pexels.com/photos/3738988/pexels-photo-3738988.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: './images/estro.jpg',
       color: 'from-blue-500 to-indigo-600'
     },
     {
@@ -33,7 +34,7 @@ export const HomePage: React.FC = () => {
       description: t('school.programs.description'),
       icon: BookOpen,
       path: '/school',
-      image: 'https://images.pexels.com/photos/5212317/pexels-photo-5212317.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: './images/ecole/ecole.jpeg',
       color: 'from-green-500 to-emerald-600'
     }
   ];
@@ -220,6 +221,8 @@ export const HomePage: React.FC = () => {
       </section>
       {/* blog */}
       <BlogEvents/>
+            {/* Blog Section */}
+      <BlogSection />
       <Donations/>
 
       {/* Call to Action */}

@@ -22,7 +22,7 @@ export const DonatePage: React.FC = () => {
       description: 'Soutenir l\'évangélisation et l\'aide aux orphelins',
       icon: Heart,
       color: 'from-pink-500 to-rose-600',
-      image: 'https://scontent-los2-1.xx.fbcdn.net/v/t39.30808-6/492117372_1215765623588944_496914201644799588_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=gFONsbzJk6MQ7kNvwH5acKI&_nc_oc=AdnJNGp4QT5ou2Y2VISu9JLiM-bYZQu0NBrQlVGsCIR_2YCAQwUWRFTHqphTw2WqniXsDN-2uYUqizHti5cvPLbu&_nc_zt=23&_nc_ht=scontent-los2-1.xx&_nc_gid=MQEPlPiWoenP0tMAmL7s5w&oh=00_AfcoscRYObkocjyJ34SO9ISJyQVE464R2_xudNJ5UE4JWQ&oe=68F6C2E4'
+      image: '/images/asso.jpeg'
     },
     {
       id: 'church',
@@ -30,7 +30,7 @@ export const DonatePage: React.FC = () => {
       description: 'Contribuer à la construction du lieu de culte',
       icon: Church,
       color: 'from-blue-500 to-indigo-600',
-      image: 'https://scontent-los2-1.xx.fbcdn.net/v/t39.30808-6/547838504_122139023018730402_6860135882956708159_n.jpg?stp=dst-jpg_s600x600_tt6&_nc_cat=104&ccb=1-7&_nc_sid=833d8c&_nc_ohc=wekqFOiM55EQ7kNvwFkO-hu&_nc_oc=Adl3k-EFMdm2E2gigEJn0qoqLu_daOiI3N2GfxHP5dgeQZy6J0y_zPbrbKOn-tNRX6ZLMpV4hyYgDXSz7CtU0DaP&_nc_zt=23&_nc_ht=scontent-los2-1.xx&_nc_gid=iro-eRTENp334Zg1wVcVDw&oh=00_AfdoYmfYpY5T05DvDOcrdFzs6nsWa8W_2iMs6xyctYj6MA&oe=68F6A0A3'
+      image: './images/estro.jpg'
     },
     {
       id: 'school',
@@ -38,7 +38,7 @@ export const DonatePage: React.FC = () => {
       description: 'Financer la formation biblique des étudiants',
       icon: BookOpen,
       color: 'from-green-500 to-emerald-600',
-      image: 'https://scontent-los2-1.xx.fbcdn.net/v/t39.30808-6/504960219_1027923772818640_9053497735240021749_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_ohc=B9zOnwTPHEIQ7kNvwHTI5pd&_nc_oc=AdkefNJDx5qGsxwhArceJcA8Z60yiyGMQ2PX7WsyvOs3iEInFPr6MJ3rIhuDwCwNGCEiKiLYrOixbyhHyIJOJb94&_nc_zt=23&_nc_ht=scontent-los2-1.xx&_nc_gid=jV7AMe-EqetQq4IZ2OKBlQ&oh=00_Afe9RQQXPcs1q2t6WNRJCfzveqGlapVGUrNKUxhsBGj2cg&oe=68F6BEE5'
+      image: './images/ecole/ecole.jpeg'
     }
   ];
 
@@ -82,7 +82,7 @@ export const DonatePage: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen pt-20 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       {/* Hero Section */}
       <section
        style={{

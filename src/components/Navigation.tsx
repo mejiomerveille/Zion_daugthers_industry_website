@@ -20,7 +20,8 @@ export const Navigation: React.FC = () => {
 
   return (
     <motion.nav 
-      className="fixed top-0 w-full bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 backdrop-blur-md z-50 shadow-lg"
+      className="fixed top-0 w-full bg-transparent backdrop-blur-md z-50 shadow-lg"
+      // className="fixed top-0 w-full bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 backdrop-blur-md z-50 shadow-lg"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
