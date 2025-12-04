@@ -169,7 +169,7 @@ export const ChurchPage: React.FC = () => {
             {[
               {
                 image: '/images/im3.jpeg',
-                name: 'Pasteur Esther Minfoumou',
+                name: 'Apotre Rodrigues  Minfoumou',
                 title: 'Fondateur & Visionnaire Principal',
                 facebook: 'https://facebook.com/pasteur.jeanclaude',
                 youtube: 'https://youtube.com/@eglisejeanclaude',
@@ -197,7 +197,7 @@ export const ChurchPage: React.FC = () => {
                 <img
                   src={leader.image}
                   alt={leader.name}
-                  className="w-full h-64 object-cover"
+                  className="w-full h-92 object-cover"
                 />
                 <div className="p-6 text-center">
                   <h3 className="text-xl font-bold text-gray-800 mb-1">
@@ -252,17 +252,17 @@ export const ChurchPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                image: '/images/fidele1.jpg',
+                image: '/images/ecole/soeur.jpeg',
                 name: 'Sœur Grâce M.',
                 testimony: "J'étais malade depuis des mois, mais après la prière du dimanche, j'ai été complètement guérie ! Gloire à Dieu !"
               },
               {
-                image: '/images/fidele2.jpg',
+                image: '/images/ecole/sa.jpeg',
                 name: 'Frère Samuel T.',
                 testimony: "Dieu a transformé ma vie spirituelle depuis que j’ai rejoint cette église. J’ai retrouvé la paix et la joie intérieure."
               },
               {
-                image: '/images/fidele3.jpg',
+                image: '/images//ecole/na.jpeg',
                 name: 'Sœur Nadège L.',
                 testimony: "Pendant le culte de louange, j’ai ressenti une présence divine incroyable. Cette communauté est une vraie bénédiction."
               }
@@ -308,7 +308,7 @@ export const ChurchPage: React.FC = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {[
-              '/images/im1.jpeg',
+              '/images/fonce.jpeg',
               '/images/im2.jpeg',
               '/images/im3.jpeg',
               '/images/im4.jpeg',

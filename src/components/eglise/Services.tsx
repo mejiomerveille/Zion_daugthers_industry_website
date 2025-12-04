@@ -16,25 +16,25 @@ export default function Services() {
     {
       title: "Service Dominical du Soir",
       time: "17h00 - 19h00",
-      day: "Dimanche",
+      day: "Mardi",
       description:
         "Service d'adoration et de prière avec témoignages et enseignement",
       icon: <Music className="text-amber-600" size={24} />,
       color: "bg-amber-50 border-amber-200",
     },
     {
-      title: "Prière du Mercredi",
+      title: "Rencontre du jeudi",
       time: "19h00 - 21h00",
-      day: "Mercredi",
+      day: "Jeudi",
       description:
         "Soirée dédiée à la prière, l'intercession et la recherche de Dieu",
       icon: <Clock className="text-green-600" size={24} />,
       color: "bg-green-50 border-green-200",
     },
     {
-      title: "École Dominicale",
-      time: "09h00 - 10h00",
-      day: "Dimanche",
+      title: "École biblique",
+      time: "09h00 - 13h00",
+      day: "Samedi",
       description:
         "Formation biblique pour tous les âges, enfants et adultes",
       icon: <MapPin className="text-purple-600" size={24} />,

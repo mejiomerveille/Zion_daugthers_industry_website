@@ -21,7 +21,7 @@ export const EventsPage: React.FC = () => {
       location: 'Centre Biblique de Mbankomo',
       description:
         "Un moment de ressourcement spirituel, de prière et de communion fraternelle. Places limitées !",
-      image: 'https://scontent-los2-1.xx.fbcdn.net/v/t39.30808-6/547838504_122139023018730402_6860135882956708159_n.jpg?stp=dst-jpg_s600x600_tt6&_nc_cat=104&ccb=1-7&_nc_sid=833d8c&_nc_ohc=wekqFOiM55EQ7kNvwFvtdvg&_nc_oc=AdnJawEr_ISKt6xwwUiDdptwP-F4fLpmGVtgkM4o4uEklQBH-TqN2A1hhCMA8BgL6Hs43yU5fQKk-JdqoxONKsUi&_nc_zt=23&_nc_ht=scontent-los2-1.xx&_nc_gid=iA1o9dztfavWljWcJDYBKQ&oh=00_AfeM0lEGaOD43jzVKTfeyFMHMfza8h7yhG1ivjV00exqJg&oe=68F6A0A3',
+      image: './images/ecole/re.jpeg',
       participants: 80,
     },
     {
@@ -31,7 +31,7 @@ export const EventsPage: React.FC = () => {
       location: 'Salle Polyvalente, Yaoundé',
       description:
         "Venez célébrer la réussite de nos diplômés de la 5ᵉ promotion dans une ambiance festive et reconnaissante.",
-      image: 'https://scontent-los2-1.xx.fbcdn.net/v/t39.30808-6/504960219_1027923772818640_9053497735240021749_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_ohc=B9zOnwTPHEIQ7kNvwHTI5pd&_nc_oc=AdkefNJDx5qGsxwhArceJcA8Z60yiyGMQ2PX7WsyvOs3iEInFPr6MJ3rIhuDwCwNGCEiKiLYrOixbyhHyIJOJb94&_nc_zt=23&_nc_ht=scontent-los2-1.xx&_nc_gid=jV7AMe-EqetQq4IZ2OKBlQ&oh=00_Afe9RQQXPcs1q2t6WNRJCfzveqGlapVGUrNKUxhsBGj2cg&oe=68F6BEE5',
+      image: './images/ecole/retraite.jpeg',
       participants: 200,
     },
   ];

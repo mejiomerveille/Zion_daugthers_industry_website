@@ -3,6 +3,15 @@ import { Calendar, MapPin, Clock, Users } from 'lucide-react';
 export default function Events() {
   const events = [
     {
+      title: "Havilah 2026",
+      date: "05 au 07 Decembre 2025",
+      time: "17h00 - 22h00",
+      location: "Sanctuaire Principal",
+      description: "Une soirée dédiée au batissement du temple  spirituel avec des invités spéciaux.",
+      attendees: "150+",
+      image: "/images/havilah2.jpeg"
+    },
+     {
       title: "Conférence Spirituelle",
       date: "15 Mars 2025",
       time: "19h00 - 22h00",
@@ -27,7 +36,7 @@ export default function Events() {
       location: "Piscine Baptismale",
       description: "Cérémonie de baptême par immersion pour nouveaux convertis.",
       attendees: "200+",
-      image: "/images/worship.jpg"
+      image: "/images/ecole/bapt.jpeg"
     },
     {
       title: "Action Caritative",
