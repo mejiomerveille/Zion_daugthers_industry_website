@@ -18,16 +18,15 @@ export default function BlogEvents() {
   const blogPosts = [
     {
       id: 1,
-      title: "Témoignage Puissant lors du Service Dominical",
-      excerpt:
-        "Découvrez comment Dieu a transformé la vie de Marie, une fidèle de notre communauté qui a vécu un miracle extraordinaire.",
+      title: "Excursion à la Montagne : Un Moment de Grâce et de Communion",
+      excerpt:" Ce week-end, les membres de notre communauté se sont rendus à la montagne pour un temps de prière intense, suivant l’exemple de Jésus qui se retirait pour chercher la face de Dieu.Louanges, méditation, enseignements et témoignages ont marqué cette sortie. Une expérience spirituelle profonde qui a fortifié la foi de tous les participants.",
       content:
         "Dimanche dernier, nous avons eu le privilège d'entendre le témoignage bouleversant de sœur Marie...",
-      date: "2025-01-15",
+      date: "2025-11-15",
       time: "10:30",
       author: "Pasteur Rodrigue",
-      category: "Témoignage",
-      image: "./images/worship.jpg",
+      category: "Actualité de l’Église",
+      image: "./images/article/pr.jpeg",
       featured: true,
     },
     {
