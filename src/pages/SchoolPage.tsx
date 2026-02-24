@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { HeroSection } from '../components/HeroSection';
 import { EventsPage } from '../components/EventsPage';
-import { BookOpen, GraduationCap, Users, Award, Calendar,Play, FileText, Lock, Unlock , Mail, User, Phone } from 'lucide-react';
+import { BookOpen, GraduationCap, Award, Calendar, FileText, Lock, Unlock, Mail, User, Phone } from 'lucide-react';
 import { CourseCard } from '../components/CourseCard';
 import { studentService, courseService, Course } from '../lib/supabase';
 import { QuizModal } from '../components/QuizModal';
@@ -14,13 +14,14 @@ export const SchoolPage: React.FC = () => {
   const { t } = useLanguage();
   const [promoCode, setPromoCode] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentStudent, setCurrentStudent] = useState<any>(null);
+  const [, setCurrentStudent] = useState<any>(null);
   const [availableCourses, setAvailableCourses] = useState<Course[]>([]);
   const [showCourseModal, setShowCourseModal] = useState(false);
   const [showQuizModal, setShowQuizModal] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState<any>(null);
+  const [selectedCourse] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
+  // sessionLoading used internally by restore effect
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -28,6 +29,29 @@ export const SchoolPage: React.FC = () => {
     program: '',
     message: ''
   });
+
+  // Restore student session from localStorage (valid 2 days)
+  React.useEffect(() => {
+    const restoreSession = async () => {
+      try {
+        const saved = localStorage.getItem('student_session');
+        if (saved) {
+          const { student, expiresAt } = JSON.parse(saved);
+          if (new Date(expiresAt) > new Date()) {
+            setCurrentStudent(student);
+            setIsAuthenticated(true);
+            const courses = await courseService.getCoursesByProgram(student.program);
+            setAvailableCourses(courses);
+          } else {
+            localStorage.removeItem('student_session');
+          }
+        }
+      } catch {
+        localStorage.removeItem('student_session');
+      }
+    };
+    restoreSession();
+  }, []);
 
   const programs = [
     {
@@ -54,58 +78,16 @@ export const SchoolPage: React.FC = () => {
   ];
 
   const handlePromoCodeSubmit = async () => {
-    // Mode démo si Supabase n'est pas configuré
-    if (!import.meta.env.VITE_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co') {
-      if (promoCode.startsWith('ZION') && promoCode.length >= 8) {
-        const demoStudent = {
-          id: '1',
-          name: 'Étudiant Démo',
-          program: '1ere-annee'
-        };
-        setCurrentStudent(demoStudent);
-        setIsAuthenticated(true);
-        
-        // Charger les cours de démonstration
-        const demoCourses = [
-          {
-            id: '1',
-            title: 'Fondements de la Foi Chrétienne',
-            description: 'Introduction aux doctrines fondamentales du christianisme',
-            duration: '8 semaines',
-            lessons_count: 12,
-            image_url: 'https://images.pexels.com/photos/1112048/pexels-photo-1112048.jpeg?auto=compress&cs=tinysrgb&w=600',
-            level: '1ère Année',
-            program: '1ere-annee',
-            completed: false,
-            created_at: new Date().toISOString()
-          },
-          {
-            id: '2',
-            title: 'Histoire Biblique',
-            description: 'Étude chronologique de l\'Ancien et du Nouveau Testament',
-            duration: '6 semaines',
-            lessons_count: 10,
-            image_url: 'https://images.pexels.com/photos/1112048/pexels-photo-1112048.jpeg?auto=compress&cs=tinysrgb&w=600',
-            level: '1ère Année',
-            program: '1ere-annee',
-            completed: false,
-            created_at: new Date().toISOString()
-          }
-        ];
-        setAvailableCourses(demoCourses);
-        return;
-      } else {
-        alert('Code promo invalide. Utilisez un code commençant par ZION suivi de 4 chiffres (ex: ZION1234)');
-        return;
-      }
-    }
-    
     try {
       const student = await studentService.verifyPromoCode(promoCode.trim());
       setCurrentStudent(student);
       setIsAuthenticated(true);
       
-      // Charger les cours pour le programme de l'étudiant
+      // Save session with 2-day expiry
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 2);
+      localStorage.setItem('student_session', JSON.stringify({ student, expiresAt: expiresAt.toISOString() }));
+      
       const courses = await courseService.getCoursesByProgram(student.program);
       setAvailableCourses(courses);
     } catch (error) {
@@ -123,40 +105,13 @@ export const SchoolPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Vérifier si Supabase est configuré
-    if (!import.meta.env.VITE_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co') {
-      // Mode démo sans Supabase
-      const demoPromoCode = `ZION${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
-      setSubmitMessage(`Inscription réussie ! Votre code promo est : ${demoPromoCode}. (Mode démo - configurez Supabase pour la version complète)`);
-      
-      // Réinitialiser le formulaire
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        program: '',
-        message: ''
-      });
-      setIsSubmitting(false);
-      return;
-    }
-    
     setIsSubmitting(true);
     setSubmitMessage('');
 
     try {
       const student = await studentService.register(formData);
-      setSubmitMessage(`Inscription réussie ! Votre code promo est : ${student.promo_code}. Vous le recevrez également par email après le paiement.`);
-      
-      // Réinitialiser le formulaire
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        program: '',
-        message: ''
-      });
+      setSubmitMessage(`Inscription réussie ! Votre code promo est : ${student.promo_code}. Conservez-le précieusement, il vous sera communiqué après confirmation du paiement.`);
+      setFormData({ name: '', email: '', phone: '', program: '', message: '' });
     } catch (error: any) {
       setSubmitMessage('Erreur lors de l\'inscription. Veuillez réessayer.');
       console.error('Erreur d\'inscription:', error);

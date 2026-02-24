@@ -1,14 +1,18 @@
 import { createClient } from '@supabase/supabase-js';
+import type { Database } from '@/integrations/supabase/types';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'placeholder-key';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://vskrhdwiwyjgreadfvmb.supabase.co";
+const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZza3JoZHdpd3lqZ3JlYWRmdm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMzc3NjEsImV4cCI6MjA4NjkxMzc2MX0.yVVZqxc9jZBL9mVXLteuxs4lwlmh9oUhPqRPbzJklvs";
 
-// Vérification silencieuse pour éviter les erreurs en développement
-const isSupabaseConfigured = supabaseUrl !== 'https://placeholder.supabase.co' && supabaseAnonKey !== 'placeholder-key';
+export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_KEY, {
+  auth: {
+    storage: localStorage,
+    persistSession: true,
+    autoRefreshToken: true,
+  }
+});
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-// Types pour TypeScript
+// Types pour TypeScript (legacy - garde pour compatibilité)
 export interface Student {
   id: string;
   name: string;
@@ -54,127 +58,62 @@ export interface QuizResult {
   created_at: string;
 }
 
-// Fonctions utilitaires
+// Legacy services - these reference tables that may not exist yet
+// Using 'any' cast to avoid type errors with the new typed client
+const db = supabase as any;
+
 export const studentService = {
-  // Inscription d'un étudiant
   async register(studentData: Omit<Student, 'id' | 'promo_code' | 'payment_status' | 'created_at' | 'updated_at'>) {
-    const { data, error } = await supabase
-      .from('students')
-      .insert([studentData])
-      .select()
-      .single();
-    
+    const { data, error } = await db.from('students').insert([studentData]).select().single();
     if (error) throw error;
     return data;
   },
-
-  // Vérification du code promo
   async verifyPromoCode(promoCode: string) {
-    const { data, error } = await supabase
-      .from('students')
-      .select('*')
-      .eq('promo_code', promoCode)
-      .eq('payment_status', 'completed')
-      .single();
-    
+    const { data, error } = await db.from('students').select('*').eq('promo_code', promoCode).eq('payment_status', 'completed').single();
     if (error) throw error;
     return data;
   },
-
-  // Mise à jour du statut de paiement
   async updatePaymentStatus(studentId: string, status: 'pending' | 'completed' | 'failed') {
-    const { data, error } = await supabase
-      .from('students')
-      .update({ payment_status: status })
-      .eq('id', studentId)
-      .select()
-      .single();
-    
+    const { data, error } = await db.from('students').update({ payment_status: status }).eq('id', studentId).select().single();
     if (error) throw error;
     return data;
   }
 };
 
 export const courseService = {
-  // Récupérer tous les cours
   async getAllCourses() {
-    const { data, error } = await supabase
-      .from('courses')
-      .select('*')
-      .order('created_at', { ascending: true });
-    
+    const { data, error } = await db.from('courses_admin').select('*').eq('published', true).order('created_at', { ascending: true });
     if (error) throw error;
     return data;
   },
-
-  // Récupérer les cours par programme
   async getCoursesByProgram(program: string) {
-    const { data, error } = await supabase
-      .from('courses')
-      .select('*')
-      .eq('program', program)
-      .order('created_at', { ascending: true });
-    
+    const { data, error } = await db.from('courses_admin').select('*').eq('program', program).eq('published', true).order('created_at', { ascending: true });
     if (error) throw error;
     return data;
   }
 };
 
 export const progressService = {
-  // Récupérer la progression d'un étudiant
   async getStudentProgress(studentId: string) {
-    const { data, error } = await supabase
-      .from('student_progress')
-      .select(`
-        *,
-        courses (*)
-      `)
-      .eq('student_id', studentId);
-    
+    const { data, error } = await db.from('student_progress').select(`*, courses (*)`).eq('student_id', studentId);
     if (error) throw error;
     return data;
   },
-
-  // Mettre à jour la progression
   async updateProgress(studentId: string, courseId: string, progress: number, completed: boolean = false) {
-    const { data, error } = await supabase
-      .from('student_progress')
-      .upsert({
-        student_id: studentId,
-        course_id: courseId,
-        progress,
-        completed,
-        updated_at: new Date().toISOString()
-      })
-      .select()
-      .single();
-    
+    const { data, error } = await db.from('student_progress').upsert({ student_id: studentId, course_id: courseId, progress, completed, updated_at: new Date().toISOString() }).select().single();
     if (error) throw error;
     return data;
   }
 };
 
 export const quizService = {
-  // Sauvegarder les résultats d'un quiz
   async saveQuizResult(result: Omit<QuizResult, 'id' | 'created_at'>) {
-    const { data, error } = await supabase
-      .from('quiz_results')
-      .insert([result])
-      .select()
-      .single();
-    
+    const { data, error } = await db.from('quiz_results').insert([result]).select().single();
     if (error) throw error;
     return data;
   },
-
-  // Récupérer les résultats d'un étudiant
   async getStudentResults(studentId: string) {
-    const { data, error } = await supabase
-      .from('quiz_results')
-      .select('*')
-      .eq('student_id', studentId)
-      .order('created_at', { ascending: false });
-    
+    const { data, error } = await db.from('quiz_results').select('*').eq('student_id', studentId).order('created_at', { ascending: false });
     if (error) throw error;
     return data;
   }

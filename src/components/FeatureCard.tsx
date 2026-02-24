@@ -1,9 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Video as LucideIcon } from 'lucide-react';
+import type { LucideProps } from 'lucide-react';
 
 interface FeatureCardProps {
-  icon: LucideIcon;
+  icon: React.FC<LucideProps>;
   title: string;
   description: string;
   delay?: number;

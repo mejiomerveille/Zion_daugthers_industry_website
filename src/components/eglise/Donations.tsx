@@ -7,7 +7,7 @@ export default function Donations() {
   const [selectedAmount, setSelectedAmount] = useState('');
   const [customAmount, setCustomAmount] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('momo');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber] = useState('');
 
   const predefinedAmounts = ['50000', '100000', '250000','150000', '1100000', '1000000'];
 

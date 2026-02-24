@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { HeroSection } from '../components/HeroSection';
-import { BlogSection } from '../components/BlogSection';
+// BlogSection removed - using BlogEvents from DB instead
 import { FeatureCard } from '../components/FeatureCard';
 import { Heart, BookOpen, Church, Users, ArrowRight } from 'lucide-react';
 import BlogEvents from '../components/eglise/BlogEvents';
@@ -221,8 +221,10 @@ export const HomePage: React.FC = () => {
       </section>
       {/* blog */}
       <BlogEvents/>
-            {/* Blog Section */}
-      <BlogSection />
+            {/* Blog Section 
+            
+            */}
+      {/* <BlogSection /> */}
       <Donations/>
 
       {/* Call to Action */}

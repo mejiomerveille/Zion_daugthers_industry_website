@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { HeroSection } from '../components/HeroSection';
-import { Heart, Users, Gift, Music, Camera, ArrowRight } from 'lucide-react';
+import { Heart, Gift, Music, Camera, ArrowRight } from 'lucide-react';
 import interview from '../../public/images/association/Image interview crtv.png'
 import interview2 from '../../public/images/association/image interview 2.png'
 

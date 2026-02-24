@@ -18,7 +18,7 @@ interface CourseCardProps {
   onClick: () => void;
 }
 
-export const CourseCard: React.FC<CourseCardProps> = ({ course, onClick }) => {
+export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {

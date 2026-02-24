@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, User, Heart, MessageCircle, Share2, X, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Calendar, User, Heart, MessageCircle, ChevronRight } from 'lucide-react';
 
 interface BlogPost {
   id: string;
@@ -464,386 +464,209 @@ interface BlogSectionProps {
 }
 
 export const BlogSection: React.FC<BlogSectionProps> = ({ showAll = false }) => {
-  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const [_selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [showAllPosts, setShowAllPosts] = useState(false);
-  const [likedPosts, setLikedPosts] = useState<Set<string>>(new Set());
-  const [newComment, setNewComment] = useState('');
-  const [commentingPost, setCommentingPost] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_newComment, _setNewComment] = useState('');
 
   const displayedPosts = showAll ? blogPosts : blogPosts.slice(0, 3);
 
-  const handleLike = (postId: string) => {
-    setLikedPosts(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(postId)) {
-        newSet.delete(postId);
-      } else {
-        newSet.add(postId);
-      }
-      return newSet;
-    });
-  };
-
-  const handleComment = (postId: string) => {
-    if (newComment.trim()) {
-      // Ici vous pourriez ajouter le commentaire à la base de données
-      console.log('Nouveau commentaire:', { postId, content: newComment });
-      setNewComment('');
-      setCommentingPost(null);
-    }
-  };
-
-  const MarqueeRow = ({ posts, direction = 'left' }: { posts: BlogPost[], direction?: 'left' | 'right' }) => (
-    <motion.div
-      className="flex gap-6 whitespace-nowrap"
-      animate={{
-        x: direction === 'left' ? [0, -1000] : [0, 1000]
-      }}
-      transition={{
-        duration: 20,
-        repeat: Infinity,
-        ease: "linear"
-      }}
-    >
-      {[...posts, ...posts, ...posts].map((post, index) => (
-        <motion.div
-          key={`${post.id}-${index}`}
-          className="flex-shrink-0 w-80 bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
-          whileHover={{ scale: 1.05, y: -5 }}
-          onClick={() => setSelectedPost(post)}
-        >
-          <div className="relative h-48 overflow-hidden">
-            <img
-              src={post.image}
-              alt={post.title}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-            <div className="absolute bottom-4 left-4 right-4">
-              <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
-                {post.category}
-              </span>
-            </div>
-          </div>
-          <div className="p-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2">
-              {post.title}
-            </h3>
-            <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-              {post.excerpt}
-            </p>
-            <div className="flex items-center justify-between text-sm text-gray-500">
-              <div className="flex items-center gap-2">
-                <User className="w-4 h-4" />
-                {post.author}
-              </div>
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                {new Date(post.date).toLocaleDateString('fr-FR')}
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </motion.div>
-  );
+  // const MarqueeRow = ({ posts, direction = 'left' }: { posts: BlogPost[], direction?: 'left' | 'right' }) => (
+  //   <motion.div
+  //     className="flex gap-6 whitespace-nowrap"
+  //     animate={{
+  //       x: direction === 'left' ? [0, -1000] : [0, 1000]
+  //     }}
+  //     transition={{
+  //       duration: 20,
+  //       repeat: Infinity,
+  //       ease: "linear"
+  //     }}
+  //   >
+  //     {[...posts, ...posts, ...posts].map((post, index) => (
+  //       <motion.div
+  //         key={`${post.id}-${index}`}
+  //         className="flex-shrink-0 w-80 bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+  //         whileHover={{ scale: 1.05, y: -5 }}
+  //         onClick={() => setSelectedPost(post)}
+  //       >
+  //         <div className="relative h-48 overflow-hidden">
+  //           <img
+  //             src={post.image}
+  //             alt={post.title}
+  //             className="w-full h-full object-cover"
+  //           />
+  //           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+  //           <div className="absolute bottom-4 left-4 right-4">
+  //             <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+  //               {post.category}
+  //             </span>
+  //           </div>
+  //         </div>
+  //         <div className="p-6">
+  //           <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2">
+  //             {post.title}
+  //           </h3>
+  //           <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+  //             {post.excerpt}
+  //           </p>
+  //           <div className="flex items-center justify-between text-sm text-gray-500">
+  //             <div className="flex items-center gap-2">
+  //               <User className="w-4 h-4" />
+  //               {post.author}
+  //             </div>
+  //             <div className="flex items-center gap-2">
+  //               <Calendar className="w-4 h-4" />
+  //               {new Date(post.date).toLocaleDateString('fr-FR')}
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </motion.div>
+  //     ))}
+  //   </motion.div>
+  // );
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 overflow-hidden">
+<section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 overflow-hidden">
 
-      {showAll || showAllPosts ? (
-        /* Vue complète avec effet marquee */
-        <div className="space-y-8">
-          <div className="overflow-hidden">
-            <MarqueeRow posts={blogPosts.slice(0, 2)} direction="left" />
-          </div>
-          <div className="overflow-hidden">
-            <MarqueeRow posts={blogPosts.slice(2, 4)} direction="right" />
-          </div>
-        </div>
-      ) : (
-        /* Vue normale pour la page d'accueil */
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {displayedPosts.map((post, index) => (
-              <motion.article
-                key={post.id}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                whileHover={{ scale: 1.02, y: -5 }}
-                viewport={{ once: true }}
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
-                      {post.category}
-                    </span>
-                  </div>
-                </div>
-                
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed">
-                    {post.excerpt}
-                  </p>
-                  
-                  <div className="flex items-center justify-between mb-4 text-sm text-gray-500">
-                    <div className="flex items-center gap-2">
-                      <User className="w-4 h-4" />
-                      {post.author}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      {new Date(post.date).toLocaleDateString('fr-FR')}
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
-                      <div className="flex items-center gap-1">
-                        <Heart className="w-4 h-4" />
-                        {post.likes}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <MessageCircle className="w-4 h-4" />
-                        {post.comments.length}
-                      </div>
-                    </div>
-                    
-                    <motion.button
-                      onClick={() => setSelectedPost(post)}
-                      className="text-blue-600 font-medium hover:text-blue-800 transition-colors flex items-center gap-1"
-                      whileHover={{ x: 5 }}
-                    >
-                      Lire plus
-                      <ChevronRight className="w-4 h-4" />
-                    </motion.button>
-                  </div>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-          
-          <div className="text-center">
-            <motion.button
-              onClick={() => setShowAllPosts(true)}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-xl transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Charger plus d'articles
-            </motion.button>
-          </div>
-        </div>
-      )}
-
-      {/* Modal d'article détaillé */}
-      <AnimatePresence>
-        {selectedPost && (
-          <motion.div
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedPost(null)}
+  {/* Vue complète sans effet marquee */}
+  {showAll || showAllPosts ? (
+    <div className="container mx-auto px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        {blogPosts.map((post, index) => (
+          <motion.article
+            key={post.id}
+            className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            whileHover={{ scale: 1.02, y: -5 }}
+            viewport={{ once: true }}
+            onClick={() => setSelectedPost(post)}
           >
-            <motion.div
-              className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl"
-              initial={{ scale: 0.8, opacity: 0, y: 50 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: 50 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Header */}
-              <div className="relative h-64 overflow-hidden">
-                <img
-                  src={selectedPost.image}
-                  alt={selectedPost.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                <button
-                  onClick={() => setSelectedPost(null)}
-                  className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
-                >
-                  <X className="w-6 h-6 text-white" />
-                </button>
-                <div className="absolute bottom-6 left-6 right-6">
-                  <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold mb-4 inline-block">
-                    {selectedPost.category}
-                  </span>
-                  <h1 className="text-3xl font-bold text-white mb-2">
-                    {selectedPost.title}
-                  </h1>
-                  <div className="flex items-center gap-4 text-white/90 text-sm">
-                    <div className="flex items-center gap-2">
-                      <User className="w-4 h-4" />
-                      {selectedPost.author}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      {new Date(selectedPost.date).toLocaleDateString('fr-FR')}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="max-h-[60vh] overflow-y-auto">
-                {/* Actions */}
-                <div className="p-6 border-b border-gray-200">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-6">
-                      <motion.button
-                        onClick={() => handleLike(selectedPost.id)}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
-                          likedPosts.has(selectedPost.id)
-                            ? 'bg-red-100 text-red-600'
-                            : 'bg-gray-100 text-gray-600 hover:bg-red-50 hover:text-red-600'
-                        }`}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <Heart className={`w-5 h-5 ${likedPosts.has(selectedPost.id) ? 'fill-current' : ''}`} />
-                        {selectedPost.likes + (likedPosts.has(selectedPost.id) ? 1 : 0)}
-                      </motion.button>
-                      
-                      <button
-                        onClick={() => setCommentingPost(commentingPost === selectedPost.id ? null : selectedPost.id)}
-                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all"
-                      >
-                        <MessageCircle className="w-5 h-5" />
-                        {selectedPost.comments.length}
-                      </button>
-                      
-                      <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-green-50 hover:text-green-600 transition-all">
-                        <Share2 className="w-5 h-5" />
-                        Partager
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Contenu */}
-                <div className="p-6">
-                  <div 
-                    className="prose prose-lg max-w-none"
-                    dangerouslySetInnerHTML={{ __html: selectedPost.content }}
-                  />
-                </div>
-
-                {/* Commentaires */}
-                <div className="p-6 border-t border-gray-200">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-6">
-                    Commentaires ({selectedPost.comments.length})
-                  </h3>
-                  
-                  {/* Nouveau commentaire */}
-                  {commentingPost === selectedPost.id && (
-                    <motion.div
-                      className="mb-6 p-4 bg-gray-50 rounded-2xl"
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                    >
-                      <textarea
-                        value={newComment}
-                        onChange={(e) => setNewComment(e.target.value)}
-                        placeholder="Écrivez votre commentaire..."
-                        className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                        rows={3}
-                      />
-                      <div className="flex justify-end gap-3 mt-3">
-                        <button
-                          onClick={() => setCommentingPost(null)}
-                          className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-                        >
-                          Annuler
-                        </button>
-                        <button
-                          onClick={() => handleComment(selectedPost.id)}
-                          className="px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
-                        >
-                          Publier
-                        </button>
-                      </div>
-                    </motion.div>
-                  )}
-                  
-                  {/* Liste des commentaires */}
-                  <div className="space-y-4">
-                    {selectedPost.comments.map((comment) => (
-                      <motion.div
-                        key={comment.id}
-                        className="flex gap-4"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                      >
-                        <img
-                          src={comment.avatar}
-                          alt={comment.author}
-                          className="w-10 h-10 rounded-full object-cover"
-                        />
-                        <div className="flex-1">
-                          <div className="bg-gray-100 rounded-2xl p-4">
-                            <h4 className="font-semibold text-gray-800 mb-1">
-                              {comment.author}
-                            </h4>
-                            <p className="text-gray-700">
-                              {comment.content}
-                            </p>
-                          </div>
-                          <div className="text-sm text-gray-500 mt-2 ml-4">
-                            {new Date(comment.date).toLocaleDateString('fr-FR')}
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Modal pour tous les articles */}
-      <AnimatePresence>
-        {showAllPosts && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <div className="h-full flex flex-col">
-              <div className="flex items-center justify-between p-6 border-b border-white/20">
-                <h2 className="text-2xl font-bold text-white">Tous nos Articles</h2>
-                <button
-                  onClick={() => setShowAllPosts(false)}
-                  className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
-                >
-                  <X className="w-6 h-6 text-white" />
-                </button>
-              </div>
-              
-              <div className="flex-1 overflow-hidden py-8">
-                <BlogSection showAll={true} />
+            <div className="relative h-48 overflow-hidden">
+              <img
+                src={post.image}
+                alt={post.title}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                  {post.category}
+                </span>
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </section>
+
+            <div className="p-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2">
+                {post.title}
+              </h3>
+              <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                {post.excerpt}
+              </p>
+              <div className="flex items-center justify-between text-sm text-gray-500">
+                <div className="flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  {post.author}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  {new Date(post.date).toLocaleDateString('fr-FR')}
+                </div>
+              </div>
+            </div>
+          </motion.article>
+        ))}
+      </div>
+    </div>
+  ) : (
+    /* Vue normale pour la page d'accueil */
+    <div className="container mx-auto px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        {displayedPosts.map((post, index) => (
+          <motion.article
+            key={post.id}
+            className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.2 }}
+            whileHover={{ scale: 1.02, y: -5 }}
+            viewport={{ once: true }}
+          >
+            <div className="relative h-48 overflow-hidden">
+              <img
+                src={post.image}
+                alt={post.title}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                  {post.category}
+                </span>
+              </div>
+            </div>
+
+            <div className="p-6">
+              <h3 className="text-xl font-semibold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors">
+                {post.title}
+              </h3>
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                {post.excerpt}
+              </p>
+
+              <div className="flex items-center justify-between mb-4 text-sm text-gray-500">
+                <div className="flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  {post.author}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  {new Date(post.date).toLocaleDateString('fr-FR')}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4 text-sm text-gray-500">
+                  <div className="flex items-center gap-1">
+                    <Heart className="w-4 h-4" />
+                    {post.likes}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <MessageCircle className="w-4 h-4" />
+                    {post.comments.length}
+                  </div>
+                </div>
+
+                <motion.button
+                  onClick={() => setSelectedPost(post)}
+                  className="text-blue-600 font-medium hover:text-blue-800 transition-colors flex items-center gap-1"
+                  whileHover={{ x: 5 }}
+                >
+                  Lire plus
+                  <ChevronRight className="w-4 h-4" />
+                </motion.button>
+              </div>
+            </div>
+          </motion.article>
+        ))}
+      </div>
+
+      <div className="text-center">
+        <motion.button
+          onClick={() => setShowAllPosts(true)}
+          className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-xl transition-all duration-300"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Charger plus d'articles
+        </motion.button>
+      </div>
+    </div>
+  )}
+
+</section>
+
   );
 };

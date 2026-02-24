@@ -1,135 +1,79 @@
-"use client";
-import { motion } from "framer-motion";
-import {
-  Calendar,
-  Clock,
-  MapPin,
-  User,
-  ArrowRight,
-  Search,
-  Filter,
-} from "lucide-react";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Calendar, User, ArrowRight, Search, Filter, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
+
+interface EventPost {
+  id: string;
+  title: string;
+  excerpt: string | null;
+  content: string | null;
+  category: string;
+  image_url: string | null;
+  author: string | null;
+  featured: boolean | null;
+  published: boolean | null;
+  created_at: string;
+}
 
 export default function BlogEvents() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [posts, setPosts] = useState<EventPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPost, setSelectedPost] = useState<EventPost | null>(null);
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: "Excursion à la Montagne : Un Moment de Grâce et de Communion",
-      excerpt:" Ce week-end, les membres de notre communauté se sont rendus à la montagne pour un temps de prière intense, suivant l’exemple de Jésus qui se retirait pour chercher la face de Dieu.Louanges, méditation, enseignements et témoignages ont marqué cette sortie. Une expérience spirituelle profonde qui a fortifié la foi de tous les participants.",
-      content:
-        "Dimanche dernier, nous avons eu le privilège d'entendre le témoignage bouleversant de sœur Marie...",
-      date: "2025-11-15",
-      time: "10:30",
-      author: "Pasteur Rodrigue",
-      category: "Actualité de l’Église",
-      image: "./images/article/pr.jpeg",
-      featured: true,
-    },
-    {
-      id: 2,
-      title: "Conférence Prophétique - Les Temps de la Fin",
-      excerpt:
-        "Une soirée exceptionnelle avec l'évangéliste Paul Mbarga sur les signes des temps et la préparation de l'Église.",
-      content:
-        "La conférence prophétique organisée le 20 janvier a rassemblé plus de 300 personnes...",
-      date: "2025-01-20",
-      time: "19:00",
-      author: "Évangéliste Paul Mbarga",
-      category: "Conférence",
-      image: "https://images.pexels.com/photos/8674899/pexels-photo-8674899.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop",
-      featured: false,
-    },
-    {
-      id: 3,
-      title: "Baptême de 15 Nouveaux Convertis",
-      excerpt:
-        "Une cérémonie émouvante où 15 âmes ont décidé de suivre Jésus-Christ par le baptême d'eau.",
-      content:
-        "Ce dimanche 25 janvier, nous avons célébré le baptême de 15 nouveaux convertis...",
-      date: "2025-01-25",
-      time: "15:00",
-      author: "Pasteur Marie-Claire",
-      category: "Baptême",
-      image: "https://images.pexels.com/photos/8468070/pexels-photo-8468070.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop",
-      featured: false,
-    },
-    {
-      id: 4,
-      title: "Retraite Spirituelle des Jeunes - Témoignages",
-      excerpt:
-        "Les jeunes de 16 à 35 ans partagent leurs expériences lors de la retraite spirituelle du weekend dernier.",
-      content:
-        "La retraite spirituelle des jeunes qui s'est déroulée du 1er au 3 février...",
-      date: "2025-02-03",
-      time: "Tout le weekend",
-      author: "Responsable Jeunesse",
-      category: "Jeunesse",
-      image: "https://images.pexels.com/photos/7654693/pexels-photo-7654693.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop",
-      featured: true,
-    },
-    {
-      id: 5,
-      title: "Action Caritative - Distribution de Vivres",
-      excerpt:
-        "Notre église a organisé une grande distribution de vivres pour 200 familles nécessiteuses du quartier.",
-      content:
-        "Dans le cadre de notre mission sociale, l'église La Grâce Divine a organisé...",
-      date: "2025-02-08",
-      time: "10:00 - 16:00",
-      author: "Comité Social",
-      category: "Action Sociale",
-      image: "https://images.pexels.com/photos/6646971/pexels-photo-6646971.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop",
-      featured: false,
-    },
-    {
-      id: 6,
-      title: "Séminaire sur le Mariage Chrétien",
-      excerpt:
-        "Un séminaire enrichissant sur les fondements bibliques du mariage animé par des couples expérimentés.",
-      content:
-        "Le séminaire sur le mariage chrétien organisé le 12 février a connu un grand succès...",
-      date: "2025-02-12",
-      time: "14:00 - 18:00",
-      author: "Couples Conseillers",
-      category: "Formation",
-      image: "https://images.pexels.com/photos/8468068/pexels-photo-8468068.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop",
-      featured: false,
-    },
-  ];
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const { data } = await supabase
+        .from("events")
+        .select("*")
+        .eq("published", true)
+        .order("created_at", { ascending: false });
+      setPosts((data as EventPost[]) || []);
+      setLoading(false);
+    };
+    fetchEvents();
+  }, []);
 
   const categories = [
     "all",
-    "Témoignage",
+    "Actualité de l'Église",
     "Conférence",
     "Baptême",
     "Jeunesse",
     "Action Sociale",
     "Formation",
+    "Témoignage",
   ];
 
-  const filteredPosts = blogPosts.filter((post) => {
+  const filteredPosts = posts.filter((post) => {
     const matchesSearch =
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+      (post.excerpt || "").toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory =
       selectedCategory === "all" || post.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   const featuredPost = filteredPosts.find((post) => post.featured);
-  const regularPosts = filteredPosts.filter((post) => !post.featured);
+  const regularPosts = filteredPosts.filter((post) => post !== featuredPost);
+
+  if (loading) {
+    return (
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div className="container mx-auto px-4 text-center">
+          <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto" />
+        </div>
+      </section>
+    );
+  }
+
+  if (posts.length === 0) return null;
 
   return (
-    <section
-      id="blog"
-      className="py-20 bg-gradient-to-br from-gray-50 to-blue-50"
-    >
+    <section id="blog" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 40 }}
@@ -141,9 +85,7 @@ export default function BlogEvents() {
             Blog des Événements
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Découvrez les dernières nouvelles, témoignages et événements de
-            notre communauté. Restez connectés à la vie spirituelle de La Grâce
-            Divine.
+            Découvrez les dernières nouvelles, témoignages et événements de notre communauté.
           </p>
         </motion.div>
 
@@ -156,27 +98,21 @@ export default function BlogEvents() {
           viewport={{ once: true }}
         >
           <div className="relative flex-1">
-            <Search
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-              size={20}
-            />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <input
               type="text"
               placeholder="Rechercher un événement..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300"
+              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
             />
           </div>
           <div className="relative">
-            <Filter
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-              size={20}
-            />
+            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="pl-10 pr-8 py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 bg-white"
+              className="pl-10 pr-8 py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white"
             >
               {categories.map((category) => (
                 <option key={category} value={category}>
@@ -200,14 +136,13 @@ export default function BlogEvents() {
               <div className="grid lg:grid-cols-2 gap-0">
                 <div className="relative overflow-hidden group">
                   <img
-                    src={featuredPost.image}
+                    src={featuredPost.image_url || "/images/blanc.jpeg"}
                     alt={featuredPost.title}
                     className="w-full h-80 lg:h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute top-4 left-4 bg-amber-500 text-white px-4 py-2 rounded-full text-sm font-bold">
                     À la Une
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 <div className="p-8 lg:p-12 flex flex-col justify-center">
                   <div className="flex items-center space-x-4 mb-4">
@@ -216,23 +151,21 @@ export default function BlogEvents() {
                     </span>
                     <div className="flex items-center text-gray-500 text-sm">
                       <Calendar size={16} className="mr-1" />
-                      {new Date(featuredPost.date).toLocaleDateString("fr-FR")}
+                      {new Date(featuredPost.created_at).toLocaleDateString("fr-FR")}
                     </div>
                   </div>
-                  <h3 className="text-3xl font-bold text-gray-900 mb-4 hover:text-blue-600 transition-colors">
-                    {featuredPost.title}
-                  </h3>
-                  <p className="text-gray-600 mb-6 leading-relaxed text-lg">
-                    {featuredPost.excerpt}
-                  </p>
+                  <h3 className="text-3xl font-bold text-gray-900 mb-4">{featuredPost.title}</h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed text-lg">{featuredPost.excerpt}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2 text-gray-500">
                       <User size={16} />
                       <span className="text-sm">{featuredPost.author}</span>
                     </div>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 flex items-center space-x-2">
-                      <span>Lire Plus</span>
-                      <ArrowRight size={16} />
+                    <button
+                      onClick={() => setSelectedPost(featuredPost)}
+                      className="text-blue-600 font-medium flex items-center gap-1 hover:gap-2 transition-all"
+                    >
+                      Lire l'article <ArrowRight size={16} />
                     </button>
                   </div>
                 </div>
@@ -240,7 +173,129 @@ export default function BlogEvents() {
             </div>
           </motion.div>
         )}
+
+        {/* Regular Posts Grid */}
+        {regularPosts.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {regularPosts.map((post, index) => (
+              <motion.div
+                key={post.id}
+                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <div className="relative overflow-hidden group">
+                  <img
+                    src={post.image_url || "/images/blanc.jpeg"}
+                    alt={post.title}
+                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 left-3">
+                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                      {post.category}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center text-gray-400 text-sm mb-3">
+                    <Calendar size={14} className="mr-1" />
+                    {new Date(post.created_at).toLocaleDateString("fr-FR")}
+                    <span className="mx-2">•</span>
+                    <User size={14} className="mr-1" />
+                    {post.author}
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{post.title}</h3>
+                  <p className="text-gray-600 text-sm line-clamp-3 mb-4">{post.excerpt}</p>
+                  <button
+                    onClick={() => setSelectedPost(post)}
+                    className="text-blue-600 font-medium text-sm flex items-center gap-1 hover:gap-2 transition-all"
+                  >
+                    Lire Plus <ArrowRight size={14} />
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
+
+      {/* Article Detail Modal */}
+      <AnimatePresence>
+        {selectedPost && (
+          <motion.div
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedPost(null)}
+          >
+            <motion.div
+              className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden shadow-2xl"
+              initial={{ scale: 0.9, opacity: 0, y: 30 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 30 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header Image */}
+              {selectedPost.image_url && (
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={selectedPost.image_url}
+                    alt={selectedPost.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <button
+                    onClick={() => setSelectedPost(null)}
+                    className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors"
+                  >
+                    <X className="w-5 h-5 text-white" />
+                  </button>
+                  <div className="absolute bottom-4 left-6 right-6">
+                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                      {selectedPost.category}
+                    </span>
+                  </div>
+                </div>
+              )}
+              {!selectedPost.image_url && (
+                <div className="flex justify-end p-4">
+                  <button
+                    onClick={() => setSelectedPost(null)}
+                    className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
+                  >
+                    <X className="w-5 h-5 text-gray-600" />
+                  </button>
+                </div>
+              )}
+
+              {/* Modal Content */}
+              <div className="p-6 md:p-8 overflow-y-auto max-h-[calc(90vh-16rem)]">
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+                  {selectedPost.title}
+                </h2>
+                <div className="flex items-center gap-4 text-gray-500 text-sm mb-6">
+                  <div className="flex items-center gap-1">
+                    <Calendar size={14} />
+                    {new Date(selectedPost.created_at).toLocaleDateString("fr-FR", { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </div>
+                  {selectedPost.author && (
+                    <div className="flex items-center gap-1">
+                      <User size={14} />
+                      {selectedPost.author}
+                    </div>
+                  )}
+                </div>
+                <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed whitespace-pre-line">
+                  {selectedPost.content || selectedPost.excerpt || "Aucun contenu disponible."}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

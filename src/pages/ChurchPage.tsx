@@ -6,34 +6,13 @@ import { HeroSection } from '../components/HeroSection';
 import About from '../components/eglise/About';
 import Services from '../components/eglise/Services';
 import Events from '../components/eglise/Events';
-import { Church, Facebook, Users, SprayCan as Pray, Building, Heart, Instagram, TicketCheckIcon, Youtube } from 'lucide-react';
+import { Facebook, Users, Building, Heart, Instagram, TicketCheckIcon, Youtube } from 'lucide-react';
 
 export const ChurchPage: React.FC = () => {
   const { t } = useLanguage();
 
-  const activities = [
-    {
-      icon: Church,
-      title: t('church.activities.worship'),
-      description: 'Cultes dominicaux avec prédication, louange et communion',
-      time: 'Dimanche 9h00',
-      color: 'from-blue-500 to-indigo-600'
-    },
-    {
-      icon: Pray,
-      title: t('church.activities.prayer'),
-      description: 'Temps de prière collective et intercession',
-      time: 'Mercredi 18h00',
-      color: 'from-purple-500 to-pink-600'
-    },
-    {
-      icon: Users,
-      title: t('church.activities.fellowship'),
-      description: 'Moments de partage, d\'entraide et de fraternité',
-      time: 'Vendredi 19h00',
-      color: 'from-green-500 to-emerald-600'
-    }
-  ];
+
+
 
   return (
     <div className="min-h-screen">

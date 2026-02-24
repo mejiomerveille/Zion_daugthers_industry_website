@@ -9,7 +9,7 @@ export const DonatePage: React.FC = () => {
   const [selectedStructure, setSelectedStructure] = useState('');
   const [amount, setAmount] = useState('');
   const [customAmount, setCustomAmount] = useState('');
-  const [donorInfo, setDonorInfo] = useState({
+  const [donorInfo] = useState({
     name: '',
     email: '',
     anonymous: false
