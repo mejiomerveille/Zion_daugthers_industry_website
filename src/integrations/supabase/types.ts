@@ -98,6 +98,59 @@ export type Database = {
         }
         Relationships: []
       }
+      evaluations: {
+        Row: {
+          course_id: string | null
+          created_at: string
+          description: string | null
+          duration_minutes: number | null
+          evaluation_date: string
+          id: string
+          instructions: string | null
+          max_score: number | null
+          program: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          course_id?: string | null
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number | null
+          evaluation_date: string
+          id?: string
+          instructions?: string | null
+          max_score?: number | null
+          program?: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          course_id?: string | null
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number | null
+          evaluation_date?: string
+          id?: string
+          instructions?: string | null
+          max_score?: number | null
+          program?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "evaluations_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses_admin"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       events: {
         Row: {
           author: string | null

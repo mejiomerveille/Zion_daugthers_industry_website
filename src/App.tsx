@@ -16,6 +16,7 @@ import AdminPages from './pages/admin/AdminPages';
 import AdminCourses from './pages/admin/AdminCourses';
 import AdminDonations from './pages/admin/AdminDonations';
 import AdminStudents from './pages/admin/AdminStudents';
+import AdminEvaluations from './pages/admin/AdminEvaluations';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
             <Route path="courses" element={<AdminCourses />} />
             <Route path="donations" element={<AdminDonations />} />
             <Route path="students" element={<AdminStudents />} />
+            <Route path="evaluations" element={<AdminEvaluations />} />
           </Route>
         </Routes>
       </Router>

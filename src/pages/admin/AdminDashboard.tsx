@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { CalendarDays, FileText, GraduationCap, Heart, TrendingUp } from 'lucide-react';
+import { CalendarDays, FileText, GraduationCap, Heart, TrendingUp, ClipboardCheck } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState({ events: 0, pages: 0, courses: 0, donations: 0, totalDonations: 0 });
+  const [stats, setStats] = useState({ events: 0, pages: 0, courses: 0, donations: 0, totalDonations: 0, evaluations: 0 });
 
   useEffect(() => {
     async function fetchStats() {
-      const [events, pages, courses, donations] = await Promise.all([
+      const [events, pages, courses, donations, evaluations] = await Promise.all([
         supabase.from('events').select('id', { count: 'exact', head: true }),
         supabase.from('page_contents').select('id', { count: 'exact', head: true }),
         supabase.from('courses_admin').select('id', { count: 'exact', head: true }),
         supabase.from('donations').select('amount'),
+        supabase.from('evaluations').select('id', { count: 'exact', head: true }),
       ]);
 
       const totalDonations = (donations.data || []).reduce((sum: number, d: any) => sum + Number(d.amount), 0);
@@ -23,6 +24,7 @@ export default function AdminDashboard() {
         courses: courses.count || 0,
         donations: (donations.data || []).length,
         totalDonations,
+        evaluations: evaluations.count || 0,
       });
     }
     fetchStats();
@@ -33,6 +35,7 @@ export default function AdminDashboard() {
     { label: 'Contenus', value: stats.pages, icon: FileText, color: 'from-purple-500 to-purple-600' },
     { label: 'Cours', value: stats.courses, icon: GraduationCap, color: 'from-green-500 to-green-600' },
     { label: 'Dons', value: stats.donations, icon: Heart, color: 'from-pink-500 to-pink-600' },
+    { label: 'Évaluations', value: stats.evaluations, icon: ClipboardCheck, color: 'from-orange-500 to-orange-600' },
   ];
 
   return (

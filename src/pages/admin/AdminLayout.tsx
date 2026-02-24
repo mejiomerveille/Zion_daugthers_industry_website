@@ -11,6 +11,7 @@ import {
   Menu,
   X,
   Users,
+  ClipboardCheck,
 } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
@@ -21,6 +22,7 @@ const navItems = [
   { path: '/admin/pages', label: 'Contenus', icon: FileText },
   { path: '/admin/courses', label: 'Cours', icon: GraduationCap },
   { path: '/admin/students', label: 'Étudiants', icon: Users },
+  { path: '/admin/evaluations', label: 'Évaluations', icon: ClipboardCheck },
   { path: '/admin/donations', label: 'Dons', icon: Heart },
 ];
 
